@@ -14,7 +14,6 @@ app = Flask(__name__)
 def hello_world():
     return render_template('index.html')
 
-
 @app.route('/comment/new', methods=['POST'])
 def add_comment():
     # Get comment from the POST body
@@ -66,15 +65,11 @@ def moderation():
         elif len(result_moderation["Terms"]) > 1:
             texte = "Votre commentaire a été supprimé !!"
 
-        return Response(texte)
+        # return Response(texte)
+        return render_template("index.html", message=texte)   
 
         # return Response("hello")
 
-
-        # if len(result_moderation) <= 1:
-        #     return Response("Commentaire enregistré")    
-        # else:
-        #     return Response("Commentaire refusé : + json.loads(json_data['Terms'])") 
 
     req_data = request.get_json()
     comment = req_data['comment']
