@@ -1,5 +1,5 @@
-export FLASK_APP=export FLASK_APP=MSP-2-APP/main.py
-export FLASK_ENV=development
+export FLASK_APP=./MSP-2-APP/main.py
+export FLASK_ENV=developmentexport FLASK_ENV=development
 flask run
 
 https://github.com/sahar-team/MSP-2-APP

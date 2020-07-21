@@ -1,3 +1,4 @@
+# coding: utf-8
 import helper
 from flask import Flask, request, Response, render_template, redirect
 import json
@@ -6,9 +7,11 @@ import requests
 from pprint import pprint
 import time
 import urllib
+import sys
+reload(sys)
+sys.setdefaultencoding('UTF8')
 
 app = Flask(__name__)
-
 
 @app.route('/')
 def hello_world():
@@ -20,9 +23,8 @@ def add_comment():
     if request.method == "POST":
         req = request.form.to_dict()
         comment = req["comment"]
-        return Response("Votre commentaire a été enregistré.")    
+        return Response("ok")    
 
-    
     req_data = request.get_json()
     comment = req_data['comment']
 
@@ -66,9 +68,7 @@ def moderation():
             texte = "Votre commentaire a été supprimé !!"
 
         # return Response(texte)
-        return render_template("index.html", message=texte)   
-
-        # return Response("hello")
+        return render_template("index.html", commentaire=comment, message=texte)   
 
 
     req_data = request.get_json()
