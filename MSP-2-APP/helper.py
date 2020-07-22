@@ -31,7 +31,7 @@ def get_list():
         conn = sqlite3.connect(DB_PATH)
         conn.row_factory = sqlite3.Row
         c = conn.cursor()
-        posts = c.execute('SELECT * FROM comments').fetchall()
+        posts = c.execute('SELECT * FROM comments ORDER BY rowid desc limit 5').fetchall()
         c.close()
         return posts
         

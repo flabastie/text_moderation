@@ -17,7 +17,9 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return render_template('index.html')
+    # Récup liste commentaires depuis bd
+    res = helper.get_list()
+    return render_template("index.html", data=res)
 
 @app.route('/comment/new', methods=['POST'])
 def add_comment():
@@ -51,19 +53,22 @@ def moderation():
         result_moderation = moderation_api(comment)
 
         # Traitement commentaire
-        if result_moderation["Terms"] == None :
-           texte = "Votre commentaire a été enregistré"
-           # Enregistrement du commentaire en bd
-           helper.add_to_list(comment)
-        elif  len(result_moderation["Terms"]) == 1:
-            texte = "Votre commentaire a ete modéré à cause du mot {}".format(result_moderation["Terms"][0]['Term'])
-        elif len(result_moderation["Terms"]) > 1:
-            texte = "Votre commentaire a été supprimé !!"
+        if len(comment) != 0:
+            if result_moderation["Terms"] == None :
+                texte = "Bravo! Votre commentaire a été enregistré"
+                # Enregistrement du commentaire en bd
+                helper.add_to_list(comment)
+            elif  len(result_moderation["Terms"]) == 1:
+                texte = "Votre commentaire a été modéré à cause du mot {}".format(result_moderation["Terms"][0]['Term'])
+            elif len(result_moderation["Terms"]) > 1:
+                texte = "Désolé, votre commentaire a été modéré pour cause de vulgarité !!"
+        else:
+            texte = "Aucun commentaire saisi."
 
         # Récup liste commentaires depuis bd
         res = helper.get_list()
 
         # Render template
-        return render_template("index.html", commentaire=comment, message=texte, data=res)
+        return render_template("index.html", message=texte, data=res)
 
 
