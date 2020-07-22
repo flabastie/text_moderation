@@ -21,29 +21,6 @@ def hello_world():
     res = helper.get_list()
     return render_template("index.html", data=res)
 
-@app.route('/comment/new', methods=['POST'])
-def add_comment():
-    # Get comment from the POST body
-    if request.method == "POST":
-        req = request.form.to_dict()
-        comment = req["comment"]
-        return Response("ok")    
-
-    req_data = request.get_json()
-    comment = req_data['comment']
-
-    res_data = helper.add_to_list(comment)
-
-    if res_data is None:
-        response = Response("{'error': 'comment not added - " + comment + "'}", status=400 , mimetype='application/json')
-        return response
-
-    response = Response(json.dumps(res_data), mimetype='application/json')
-
-    return render_template("index.html")
-
-
-
 @app.route('/comment/moderation', methods=['POST'])
 def moderation():
     # Get comment from the POST body
