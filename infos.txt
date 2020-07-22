@@ -1,9 +1,14 @@
+Notes:
+
 export FLASK_APP=./MSP-2-APP/main.py
 export FLASK_ENV=development
 flask run
 
+Links:
+
 https://github.com/sahar-team/MSP-2-APP
 
-
 https://gsuite.google.com/marketplace/app/code_blocks/100740430168
+
+https://www.sqlitetutorial.net/sqlite-commands/
 

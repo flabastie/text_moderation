@@ -26,7 +26,11 @@
             <p>{{ message }}</p>
         </div>
         <div>
-            <p>{{ liste }}</p>
+            {% for item in data %}
+            <ul>
+                <li>{{item["comment"]}}</li>
+            </ul>
+            {% endfor %}
         </div>
     </div>
 </body>

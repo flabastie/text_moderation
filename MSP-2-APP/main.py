@@ -53,29 +53,17 @@ def moderation():
         # Traitement commentaire
         if result_moderation["Terms"] == None :
            texte = "Votre commentaire a été enregistré"
-           res_data = helper.add_to_list(comment)
+           # Enregistrement du commentaire en bd
+           helper.add_to_list(comment)
         elif  len(result_moderation["Terms"]) == 1:
             texte = "Votre commentaire a ete modéré à cause du mot {}".format(result_moderation["Terms"][0]['Term'])
         elif len(result_moderation["Terms"]) > 1:
             texte = "Votre commentaire a été supprimé !!"
 
+        # Récup liste commentaires depuis bd
+        res = helper.get_list()
+
         # Render template
-        return render_template("index.html", commentaire=comment, message=texte)
-
-@app.route('/base', methods=['POST'])
-def base():
-    # res = helper.get_list()
-    # response = Response(helper.get_list(), status=400 , mimetype='application/json')
-    # # response = Response(res, mimetype='application/json')
-    # # return render_template("index.html", liste=helper.get_list())
-    # # return render_template("index.html")
-    # return response
-
-    # conn = sqlite3.connect(DB_PATH)
-    # c = conn.cursor()
-    # posts = conn.execute('SELECT * FROM comments').fetchall()
-    # conn.close()
-    # return render_template('index.html', posts=posts)
-    return render_template('index.html')
+        return render_template("index.html", commentaire=comment, message=texte, data=res)
 
 

@@ -1,7 +1,8 @@
 import sqlite3
 import traceback
+import config
 
-DB_PATH = './comments.db'   # Update this path accordingly
+DB_PATH = config.db_path
 
 def add_to_list(comment):
 
@@ -26,20 +27,13 @@ def add_to_list(comment):
 
 def get_list():
 
-    return "hello"
-
     try:
         conn = sqlite3.connect(DB_PATH)
+        conn.row_factory = sqlite3.Row
         c = conn.cursor()
-        # print (comment)
-        c.execute("SELECT * FROM comments")
-
-        rows = c.fetchall()
-
-        # for row in rows:
-        #     print(row)
-
-        return {"comment": rows}
+        posts = c.execute('SELECT * FROM comments').fetchall()
+        c.close()
+        return posts
         
     except Exception as e:
         # print('Error: ', e)
