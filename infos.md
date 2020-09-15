@@ -15,3 +15,5 @@ https://www.sqlitetutorial.net/sqlite-commands/
 https://www.digitalocean.com/community/tutorials/how-to-make-a-web-application-using-flask-in-python-3-fr
 
 https://docs.google.com/document/d/1No-FvqNx-DmdML5RCHldO7o3GtbSRrLD-vwMqkg8_34/edit?usp=sharing
+
+

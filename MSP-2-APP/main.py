@@ -49,3 +49,40 @@ def moderation():
         return render_template("index.html", message=texte, data=res)
 
 
+@app.route('/comment/listmoderation', methods=['POST'])
+def listmoderation():
+    # Get comment from the POST body
+    if request.method == "POST":
+        req = request.form.to_dict()
+        comment = req["comment"]
+        comment_list = list(comment.split(" ")) 
+
+        # Recup forbidden words
+        f = open("MSP-2-APP/checklist.txt", "r")
+        forbidden_list = f.read()
+        forbidden_list = list(forbidden_list.split("\n"))
+
+        # lists compare intersection
+        inter_list = list(set(comment_list) & set(forbidden_list)) 
+         
+        # Traitement commentaire
+        if len(comment) != 0:
+            if len(inter_list) == 0 :
+                texte = "Bravo! Votre commentaire a été enregistré"
+                # Enregistrement du commentaire en bd
+                helper.add_to_list(comment)
+            elif  len(inter_list) == 1:
+                texte = "Votre commentaire a été modéré à cause du mot {}".format(inter_list[0])
+            elif len(inter_list) > 1:
+                forbidden_words = ', '.join(inter_list)
+                texte = "Désolé, votre commentaire a été modéré pour cause de vulgarité !! <br> ({})".format(forbidden_words)
+        else:
+            texte = "Aucun commentaire saisi."
+
+        # Récup liste commentaires depuis bd
+        res = helper.get_list()
+
+        # Render template
+        return render_template("index.html", message=texte, data=res)
+
+
