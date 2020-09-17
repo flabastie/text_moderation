@@ -17,11 +17,11 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return 'Hello, World!'
+    # return 'Hello, World!'
 
-    # # Récup liste commentaires depuis bd
-    # res = helper.get_list()
-    # return render_template("index.html", data=res)
+    # Récup liste commentaires depuis bd
+    res = helper.get_list()
+    return render_template("index.html", data=res)
 
 @app.route('/comment/moderation', methods=['POST'])
 def moderation():
@@ -61,7 +61,7 @@ def listmoderation():
         comment_list = [x.lower() for x in comment_list]
 
         # Recup forbidden words
-        f = open("MSP-2-APP/checklist.txt", "r")
+        f = open("app_moderation/checklist.txt", "r")
         forbidden_list = f.read()
         forbidden_list = list(forbidden_list.split("\n"))
         forbidden_list = [x.lower() for x in forbidden_list]
