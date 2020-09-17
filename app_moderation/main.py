@@ -17,8 +17,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    # return 'Hello, World!'
-
     # Récup liste commentaires depuis bd
     res = helper.get_list()
     return render_template("index.html", data=res)
