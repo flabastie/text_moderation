@@ -38,11 +38,19 @@ def moderation():
             elif  len(result_moderation["Terms"]) == 1:
                 texte = "Votre commentaire a été modéré à cause du mot {}".format(result_moderation["Terms"][0]['Term'])
             elif len(result_moderation["Terms"]) > 1:
-                texte = "Désolé, votre commentaire a été modéré pour cause de vulgarité !!"
+                # [{'Index': 11, 'OriginalIndex': 11, 'ListId': 0, 'Term': 'putain'}, 
+                # {'Index': -1, 'OriginalIndex': 18, 'ListId': 0, 'Term': 'de merde'}, 
+                # {'Index': 19, 'OriginalIndex': 21, 'ListId': 0, 'Term': 'merde'}]
+                # rejected_words = result_moderation["Terms"]
+                # for item in result_moderation["Terms"]:
+
+                rejected_words = [item['Term'] for item in result_moderation["Terms"]] 
+                rejected_words = ', '.join(rejected_words)
+                texte = "Désolé, votre commentaire a été modéré pour cause de vulgarité !! ({})".format(rejected_words)
         else:
             texte = "Aucun commentaire saisi."
 
-        # Récup liste commentaires depuis bd
+        # Récup liste commentaires depuis bdS
         res = helper.get_list()
 
         # Render template

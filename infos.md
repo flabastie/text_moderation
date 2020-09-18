@@ -1,6 +1,6 @@
 Notes:
 
-export FLASK_APP=./MSP-2-APP/main.py
+export FLASK_APP=./app_moderation/main.py
 export FLASK_ENV=development
 flask run
 
